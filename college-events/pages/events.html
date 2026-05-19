@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse and discover all upcoming college events — workshops, hackathons, cultural fests, and more.">
+  <title>Explore Events — EventHub</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/landing.css">
+  <link rel="stylesheet" href="../css/events.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎪</text></svg>">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="../index.html" class="nav-brand">
+        <span class="brand-icon">🎪</span>
+        <span>EventHub</span>
+      </a>
+      <div class="nav-menu" id="navMenu">
+        <a href="../index.html">Home</a>
+        <a href="events.html" style="color: var(--color-primary);">Events</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="dashboard.html">Dashboard</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn btn-icon btn-ghost" onclick="App.Theme.toggle()"><span class="theme-toggle-icon">🌙</span></button>
+        <a href="login.html" class="btn btn-primary btn-sm nav-auth-btn">Login</a>
+        <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="events-page">
+    <div class="container">
+      <!-- Hero -->
+      <div class="events-hero">
+        <h1>Explore Events 🎯</h1>
+        <p>Find the perfect events for you from our curated collection of workshops, hackathons, fests, and more.</p>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters-bar glass-card">
+        <div class="filter-search">
+          <span>🔍</span>
+          <input type="text" id="searchInput" placeholder="Search events by name, category, or organizer...">
+        </div>
+        <select class="filter-select" id="filterCategory">
+          <option value="">All Categories</option>
+          <option value="Technology">Technology</option>
+          <option value="Cultural">Cultural</option>
+          <option value="Sports">Sports</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Entrepreneurship">Entrepreneurship</option>
+        </select>
+        <select class="filter-select" id="filterDept">
+          <option value="">All Departments</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Fine Arts">Fine Arts</option>
+          <option value="Physical Education">Physical Education</option>
+          <option value="Business Studies">Business Studies</option>
+          <option value="Design">Design</option>
+        </select>
+        <select class="filter-select" id="filterPrice">
+          <option value="">Free & Paid</option>
+          <option value="free">Free Only</option>
+          <option value="paid">Paid Only</option>
+        </select>
+      </div>
+
+      <!-- Filter Chips -->
+      <div style="display:flex; align-items:center; justify-content: space-between; flex-wrap:wrap; gap: var(--space-3); margin-bottom: var(--space-6);">
+        <div class="filter-chips" id="filterChips">
+          <span class="chip active" data-cat="">All</span>
+          <span class="chip" data-cat="Technology">💻 Technology</span>
+          <span class="chip" data-cat="Cultural">🎭 Cultural</span>
+          <span class="chip" data-cat="Sports">⚽ Sports</span>
+          <span class="chip" data-cat="Workshop">🔧 Workshop</span>
+          <span class="chip" data-cat="Entrepreneurship">🚀 Entrepreneurship</span>
+        </div>
+        <div class="results-info">
+          <span id="resultsCount">Showing 8 events</span>
+          <select class="sort-select" id="sortSelect">
+            <option value="date">Sort by Date</option>
+            <option value="name">Sort by Name</option>
+            <option value="seats">Seats Available</option>
+            <option value="price">Price: Low to High</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Events Grid -->
+      <div class="events-grid" id="eventsGrid">
+        <!-- Filled by JS -->
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination">
+        <button class="page-btn">←</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn">→</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    let currentFilters = { search: '', category: '', dept: '', price: '', sort: 'date' };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Pre-fill category from URL
+      const urlCat = App.Utils.getParam('category');
+      if (urlCat) {
+        currentFilters.category = urlCat;
+        document.getElementById('filterCategory').value = urlCat;
+        document.querySelectorAll('.chip').forEach(c => {
+          c.classList.toggle('active', c.dataset.cat === urlCat);
+        });
+      }
+      renderEvents();
+      bindFilters();
+    });
+
+    function bindFilters() {
+      document.getElementById('searchInput').addEventListener('input', App.Utils.debounce(e => {
+        currentFilters.search = e.target.value.toLowerCase();
+        renderEvents();
+      }, 300));
+
+      document.getElementById('filterCategory').addEventListener('change', e => {
+        currentFilters.category = e.target.value;
+        updateChips(e.target.value);
+        renderEvents();
+      });
+
+      document.getElementById('filterDept').addEventListener('change', e => {
+        currentFilters.dept = e.target.value;
+        renderEvents();
+      });
+
+      document.getElementById('filterPrice').addEventListener('change', e => {
+        currentFilters.price = e.target.value;
+        renderEvents();
+      });
+
+      document.getElementById('sortSelect').addEventListener('change', e => {
+        currentFilters.sort = e.target.value;
+        renderEvents();
+      });
+
+      // Chips
+      document.getElementById('filterChips').addEventListener('click', e => {
+        const chip = e.target.closest('.chip');
+        if (!chip) return;
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentFilters.category = chip.dataset.cat;
+        document.getElementById('filterCategory').value = chip.dataset.cat;
+        renderEvents();
+      });
+    }
+
+    function updateChips(cat) {
+      document.querySelectorAll('.chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.cat === cat);
+      });
+    }
+
+    function renderEvents() {
+      const grid = document.getElementById('eventsGrid');
+      let events = [...MockData.events];
+
+      // Filter
+      if (currentFilters.search) {
+        events = events.filter(e =>
+          e.title.toLowerCase().includes(currentFilters.search) ||
+          e.category.toLowerCase().includes(currentFilters.search) ||
+          e.organizer.toLowerCase().includes(currentFilters.search) ||
+          e.tags.some(t => t.toLowerCase().includes(currentFilters.search))
+        );
+      }
+      if (currentFilters.category) {
+        events = events.filter(e => e.category === currentFilters.category);
+      }
+      if (currentFilters.dept) {
+        events = events.filter(e => e.department === currentFilters.dept);
+      }
+      if (currentFilters.price === 'free') events = events.filter(e => e.isFree);
+      if (currentFilters.price === 'paid') events = events.filter(e => !e.isFree);
+
+      // Sort
+      switch (currentFilters.sort) {
+        case 'date': events.sort((a, b) => new Date(a.date) - new Date(b.date)); break;
+        case 'name': events.sort((a, b) => a.title.localeCompare(b.title)); break;
+        case 'seats': events.sort((a, b) => a.seatsLeft - b.seatsLeft); break;
+        case 'price': events.sort((a, b) => a.price - b.price); break;
+      }
+
+      document.getElementById('resultsCount').textContent = `Showing ${events.length} event${events.length !== 1 ? 's' : ''}`;
+
+      if (events.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column: 1/-1;">
+            <div class="empty-state-icon">🔍</div>
+            <h3>No Events Found</h3>
+            <p>Try adjusting your filters or search query to find what you're looking for.</p>
+            <button class="btn btn-primary" onclick="clearFilters()">Clear Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = events.map(e => {
+        const d = App.Utils.formatDate(e.date);
+        const seatsClass = e.seatsLeft < 20 ? 'seats-low' : 'seats-ok';
+        const registered = App.Registration.isRegistered(e.id);
+        return `
+          <div class="event-card glass-card reveal">
+            <div class="event-card-banner" style="background: ${e.bannerGradient};">
+              <div class="event-banner-overlay"></div>
+              <div class="event-card-badges">
+                <span class="badge ${e.isFree ? 'badge-success' : 'badge-primary'}">${e.isFree ? 'Free' : '₹' + e.price}</span>
+                <span class="badge badge-info">${e.category}</span>
+                ${e.featured ? '<span class="badge badge-warning">🔥 Featured</span>' : ''}
+              </div>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-date">📅 ${d}</div>
+              <h3>${e.title}</h3>
+              <p style="font-size: var(--fs-sm); margin: 0 0 var(--space-2);">${e.subtitle}</p>
+              <div class="event-card-meta">
+                <span>📍 ${e.venue}</span>
+                <span>🏢 ${e.organizer}</span>
+                <span>⏰ ${e.time}</span>
+              </div>
+              <div style="display:flex; flex-wrap: wrap; gap: var(--space-1); margin: var(--space-3) 0;">
+                ${e.tags.map(t => `<span class="chip">${t}</span>`).join('')}
+              </div>
+              <div class="event-card-footer">
+                <span class="seats ${seatsClass}">${e.seatsLeft} / ${e.totalSeats} seats</span>
+                ${registered
+                  ? '<a href="event-details.html?id=' + e.id + '" class="btn btn-secondary btn-sm">✓ Registered</a>'
+                  : '<a href="event-details.html?id=' + e.id + '" class="btn btn-primary btn-sm">Register →</a>'
+                }
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      App.ScrollReveal.init();
+    }
+
+    function clearFilters() {
+      currentFilters = { search: '', category: '', dept: '', price: '', sort: 'date' };
+      document.getElementById('searchInput').value = '';
+      document.getElementById('filterCategory').value = '';
+      document.getElementById('filterDept').value = '';
+      document.getElementById('filterPrice').value = '';
+      document.getElementById('sortSelect').value = 'date';
+      document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.cat === ''));
+      renderEvents();
+    }
+  </script>
+</body>
+</html>

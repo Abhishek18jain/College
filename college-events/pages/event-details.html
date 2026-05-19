@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Event details — View schedule, speakers, and register for this event on EventHub.">
+  <title>Event Details — EventHub</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/landing.css">
+  <link rel="stylesheet" href="../css/event-details.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎪</text></svg>">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="../index.html" class="nav-brand">
+        <span class="brand-icon">🎪</span>
+        <span>EventHub</span>
+      </a>
+      <div class="nav-menu" id="navMenu">
+        <a href="../index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="dashboard.html">Dashboard</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn btn-icon btn-ghost" onclick="App.Theme.toggle()"><span class="theme-toggle-icon">🌙</span></button>
+        <a href="login.html" class="btn btn-primary btn-sm nav-auth-btn">Login</a>
+        <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="event-details-page">
+    <!-- Banner -->
+    <div class="event-banner" id="eventBanner">
+      <div class="event-banner-bg" id="bannerBg"></div>
+      <div class="overlay"></div>
+      <div class="event-banner-content">
+        <div class="event-banner-badges" id="bannerBadges"></div>
+        <h1 id="eventTitle">Loading...</h1>
+        <p id="eventSubtitle"></p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="event-content">
+        <!-- Left Column -->
+        <div>
+          <!-- Countdown -->
+          <div class="event-info-section">
+            <h2>⏳ Event Starts In</h2>
+            <div class="countdown" id="countdown">
+              <div class="countdown-item"><div class="value" id="cdDays">00</div><div class="label">Days</div></div>
+              <div class="countdown-item"><div class="value" id="cdHours">00</div><div class="label">Hours</div></div>
+              <div class="countdown-item"><div class="value" id="cdMins">00</div><div class="label">Minutes</div></div>
+              <div class="countdown-item"><div class="value" id="cdSecs">00</div><div class="label">Seconds</div></div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="event-info-section">
+            <h2>📋 About This Event</h2>
+            <div class="event-description" id="eventDescription"></div>
+          </div>
+
+          <!-- Schedule -->
+          <div class="event-info-section" id="scheduleSection" style="display:none;">
+            <h2>📅 Schedule</h2>
+            <div id="scheduleContent"></div>
+          </div>
+
+          <!-- Speakers -->
+          <div class="event-info-section" id="speakersSection" style="display:none;">
+            <h2>🎤 Speakers & Guests</h2>
+            <div class="speakers-grid" id="speakersGrid"></div>
+          </div>
+
+          <!-- Gallery -->
+          <div class="event-info-section">
+            <h2>📸 Event Gallery</h2>
+            <div class="event-gallery" id="eventGallery">
+              <div class="gallery-item"><div style="background: linear-gradient(135deg, #6C5CE7, #A29BFE); width:100%; height:100%;"></div></div>
+              <div class="gallery-item"><div style="background: linear-gradient(135deg, #00CEC9, #81ECEC); width:100%; height:100%;"></div></div>
+              <div class="gallery-item"><div style="background: linear-gradient(135deg, #FD79A8, #FDCB6E); width:100%; height:100%;"></div></div>
+              <div class="gallery-item"><div style="background: linear-gradient(135deg, #E17055, #FDCB6E); width:100%; height:100%;"></div></div>
+            </div>
+          </div>
+
+          <!-- FAQs -->
+          <div class="event-info-section" id="faqSection" style="display:none;">
+            <h2>❓ Frequently Asked Questions</h2>
+            <div id="faqContent"></div>
+          </div>
+
+          <!-- Registration Form -->
+          <div class="event-info-section">
+            <h2>📝 Quick Registration</h2>
+            <form id="regForm" class="glass-card" style="padding: var(--space-6);">
+              <div class="input-group">
+                <input type="text" id="regName" placeholder=" " required>
+                <label for="regName">Full Name</label>
+              </div>
+              <div class="input-group">
+                <input type="email" id="regEmail" placeholder=" " required>
+                <label for="regEmail">Email Address</label>
+              </div>
+              <div class="input-group">
+                <input type="tel" id="regPhone" placeholder=" " required>
+                <label for="regPhone">Phone Number</label>
+              </div>
+              <div class="input-group">
+                <select id="regDept" required>
+                  <option value="" disabled selected></option>
+                  <option>Computer Science</option>
+                  <option>Electronics</option>
+                  <option>Mechanical</option>
+                  <option>Civil</option>
+                  <option>Business Studies</option>
+                  <option>Fine Arts</option>
+                  <option>Design</option>
+                  <option>Other</option>
+                </select>
+                <label for="regDept">Department</label>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Register for This Event</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div>
+          <div class="event-sidebar-card glass-card">
+            <div class="event-meta-list" id="eventMeta"></div>
+
+            <div class="seats-progress">
+              <div class="info">
+                <span>Seats Available</span>
+                <span id="seatsText">127 / 500</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="seatsFill" style="width:0%;"></div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary register-btn" id="sidebarRegBtn" onclick="registerForEvent()">
+              🚀 Register Now
+            </button>
+            <button class="btn btn-secondary register-btn" onclick="App.Toast.info('Added to your calendar!')">
+              📅 Add to Calendar
+            </button>
+
+            <div class="divider"></div>
+
+            <h4 style="font-size: var(--fs-sm); margin-bottom: var(--space-3);">Share This Event</h4>
+            <div class="share-btns">
+              <button class="btn btn-icon btn-ghost" onclick="App.Toast.success('Link copied!')">🔗</button>
+              <button class="btn btn-icon btn-ghost" onclick="App.Toast.info('Share on Twitter')">𝕏</button>
+              <button class="btn btn-icon btn-ghost" onclick="App.Toast.info('Share on WhatsApp')">💬</button>
+              <button class="btn btn-icon btn-ghost" onclick="App.Toast.info('Share on LinkedIn')">in</button>
+            </div>
+
+            <div class="divider"></div>
+
+            <h4 style="font-size: var(--fs-sm); margin-bottom: var(--space-3);">Organized By</h4>
+            <div style="display:flex; align-items:center; gap: var(--space-3);">
+              <div class="avatar" id="organizerAvatar">TC</div>
+              <div>
+                <h5 style="font-size: var(--fs-sm);" id="organizerName">Tech Club</h5>
+                <p style="font-size: var(--fs-xs); color: var(--color-text-muted); margin:0;">Event Organizer</p>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h4 style="font-size: var(--fs-sm); margin-bottom: var(--space-3);">Tags</h4>
+            <div id="eventTags" style="display:flex; flex-wrap:wrap; gap: var(--space-2);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    let currentEvent = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const id = parseInt(App.Utils.getParam('id')) || 1;
+      currentEvent = MockData.events.find(e => e.id === id);
+      if (!currentEvent) {
+        currentEvent = MockData.events[0];
+      }
+      renderEvent();
+      startCountdown();
+      prefillForm();
+    });
+
+    function renderEvent() {
+      const e = currentEvent;
+      document.title = `${e.title} — EventHub`;
+
+      // Banner
+      document.getElementById('bannerBg').style.background = e.bannerGradient;
+      document.getElementById('eventTitle').textContent = e.title;
+      document.getElementById('eventSubtitle').textContent = e.subtitle;
+      document.getElementById('bannerBadges').innerHTML = `
+        <span class="badge ${e.isFree ? 'badge-success' : 'badge-primary'}" style="background:rgba(255,255,255,0.2); color:white;">${e.isFree ? '✓ Free' : '₹' + e.price}</span>
+        <span class="badge badge-info" style="background:rgba(255,255,255,0.2); color:white;">${e.category}</span>
+        <span class="badge" style="background:rgba(255,255,255,0.2); color:white;">${e.status === 'upcoming' ? '🟢 Upcoming' : '🔴 Ended'}</span>
+      `;
+
+      // Description
+      document.getElementById('eventDescription').innerHTML = `<p>${e.description}</p>`;
+
+      // Meta
+      document.getElementById('eventMeta').innerHTML = `
+        <div class="event-meta-item">
+          <div class="icon">📅</div>
+          <div><div class="label">Date</div><div class="value">${App.Utils.formatDate(e.date)}${e.endDate !== e.date ? ' — ' + App.Utils.formatDate(e.endDate) : ''}</div></div>
+        </div>
+        <div class="event-meta-item">
+          <div class="icon">⏰</div>
+          <div><div class="label">Time</div><div class="value">${e.time}</div></div>
+        </div>
+        <div class="event-meta-item">
+          <div class="icon">📍</div>
+          <div><div class="label">Venue</div><div class="value">${e.venue}</div></div>
+        </div>
+        <div class="event-meta-item">
+          <div class="icon">💰</div>
+          <div><div class="label">Price</div><div class="value">${e.isFree ? 'Free' : '₹' + e.price}</div></div>
+        </div>
+        <div class="event-meta-item">
+          <div class="icon">🏢</div>
+          <div><div class="label">Department</div><div class="value">${e.department}</div></div>
+        </div>
+      `;
+
+      // Seats
+      const filledPct = ((e.totalSeats - e.seatsLeft) / e.totalSeats * 100).toFixed(0);
+      document.getElementById('seatsText').textContent = `${e.seatsLeft} / ${e.totalSeats}`;
+      setTimeout(() => {
+        document.getElementById('seatsFill').style.width = filledPct + '%';
+        if (parseInt(filledPct) > 80) document.getElementById('seatsFill').style.background = 'var(--color-danger)';
+      }, 300);
+
+      // Organizer
+      document.getElementById('organizerName').textContent = e.organizer;
+      document.getElementById('organizerAvatar').textContent = e.organizer.split(' ').map(w => w[0]).join('');
+
+      // Tags
+      document.getElementById('eventTags').innerHTML = e.tags.map(t => `<span class="chip">${t}</span>`).join('');
+
+      // Registration button state
+      if (App.Registration.isRegistered(e.id)) {
+        const btn = document.getElementById('sidebarRegBtn');
+        btn.textContent = '✓ Already Registered';
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
+      }
+
+      // Schedule
+      if (e.schedule && e.schedule.length > 0) {
+        document.getElementById('scheduleSection').style.display = 'block';
+        document.getElementById('scheduleContent').innerHTML = e.schedule.map(day => `
+          <div class="schedule-day">
+            <h3>📆 ${day.day}</h3>
+            ${day.events.map(ev => `
+              <div class="schedule-item">
+                <div class="schedule-time">${ev.time}</div>
+                <div class="schedule-info">
+                  <h4>${ev.title}</h4>
+                  <p>Duration: ${ev.duration}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `).join('');
+      }
+
+      // Speakers
+      if (e.speakers && e.speakers.length > 0) {
+        document.getElementById('speakersSection').style.display = 'block';
+        document.getElementById('speakersGrid').innerHTML = e.speakers.map(s => `
+          <div class="speaker-card glass-card">
+            <div class="speaker-avatar">${s.name.split(' ').map(w => w[0]).join('')}</div>
+            <div class="speaker-info">
+              <h4>${s.name}</h4>
+              <p>${s.role}</p>
+              <div class="topic">🎯 ${s.topic}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // FAQs
+      if (e.faqs && e.faqs.length > 0) {
+        document.getElementById('faqSection').style.display = 'block';
+        document.getElementById('faqContent').innerHTML = e.faqs.map((faq, i) => `
+          <div class="accordion-item ${i === 0 ? 'active' : ''}">
+            <div class="accordion-header">
+              <span>${faq.q}</span>
+              <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-body" ${i === 0 ? 'style="max-height:500px"' : ''}>
+              <div class="accordion-content">${faq.a}</div>
+            </div>
+          </div>
+        `).join('');
+        App.Accordion.init();
+      }
+    }
+
+    function startCountdown() {
+      function update() {
+        const t = App.Utils.timeUntil(currentEvent.date);
+        document.getElementById('cdDays').textContent = String(t.days).padStart(2, '0');
+        document.getElementById('cdHours').textContent = String(t.hours).padStart(2, '0');
+        document.getElementById('cdMins').textContent = String(t.minutes).padStart(2, '0');
+        document.getElementById('cdSecs').textContent = String(t.seconds).padStart(2, '0');
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    function prefillForm() {
+      const user = App.Auth.getUser();
+      if (user) {
+        document.getElementById('regName').value = user.name || '';
+        document.getElementById('regEmail').value = user.email || '';
+      }
+    }
+
+    function registerForEvent() {
+      if (!currentEvent) return;
+      const success = App.Registration.register(currentEvent.id);
+      if (success) {
+        const btn = document.getElementById('sidebarRegBtn');
+        btn.textContent = '✓ Registered!';
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
+        // Update seats display
+        const filledPct = ((currentEvent.totalSeats - currentEvent.seatsLeft) / currentEvent.totalSeats * 100).toFixed(0);
+        document.getElementById('seatsText').textContent = `${currentEvent.seatsLeft} / ${currentEvent.totalSeats}`;
+        document.getElementById('seatsFill').style.width = filledPct + '%';
+      }
+    }
+
+    document.getElementById('regForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName');
+      const email = document.getElementById('regEmail');
+      const phone = document.getElementById('regPhone');
+      let valid = true;
+
+      [name, email, phone].forEach(f => App.Validate.clearError(f));
+
+      if (!App.Validate.required(name.value)) { App.Validate.showError(name, 'Name is required'); valid = false; }
+      if (!App.Validate.email(email.value)) { App.Validate.showError(email, 'Enter a valid email'); valid = false; }
+      if (!App.Validate.required(phone.value)) { App.Validate.showError(phone, 'Phone is required'); valid = false; }
+
+      if (!valid) return;
+
+      const btn = this.querySelector('button[type="submit"]');
+      btn.classList.add('loading');
+      btn.textContent = 'Registering...';
+
+      setTimeout(() => {
+        btn.classList.remove('loading');
+        btn.textContent = '✓ Registered Successfully!';
+        btn.disabled = true;
+        if (currentEvent) {
+          App.Registration.register(currentEvent.id);
+          const sideBtn = document.getElementById('sidebarRegBtn');
+          sideBtn.textContent = '✓ Registered!';
+          sideBtn.classList.remove('btn-primary');
+          sideBtn.classList.add('btn-secondary');
+        }
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

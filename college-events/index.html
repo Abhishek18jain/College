@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EventHub — The ultimate college event management platform. Discover, register, and manage events seamlessly.">
+  <title>EventHub — College Event Management Platform</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎪</text></svg>">
+</head>
+<body>
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-icon">🎪</span>
+        <span>EventHub</span>
+      </a>
+      <div class="nav-menu" id="navMenu">
+        <a href="#events">Events</a>
+        <a href="#features">Features</a>
+        <a href="#categories">Categories</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="pages/events.html">Explore</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn btn-icon btn-ghost" onclick="App.Theme.toggle()" data-tooltip="Toggle Theme">
+          <span class="theme-toggle-icon">🌙</span>
+        </button>
+        <a href="pages/login.html" class="btn btn-secondary btn-sm nav-auth-btn">Login</a>
+        <a href="pages/signup.html" class="btn btn-primary btn-sm">Get Started</a>
+        <div class="nav-toggle" id="navToggle">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="gradient-orb orb-3"></div>
+      <div class="grid-pattern"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+          <span>Registration Open for 8 Events</span>
+        </div>
+        <h1>Discover & Join <span class="gradient-text">Amazing Events</span> at Your College</h1>
+        <p>Your one-stop platform for browsing, registering, and managing college events. Never miss a hackathon, workshop, or cultural fest again.</p>
+        <div class="hero-actions">
+          <a href="pages/events.html" class="btn btn-primary btn-xl">
+            🚀 Explore Events
+          </a>
+          <a href="pages/signup.html" class="btn btn-secondary btn-xl">
+            Create Account
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="value" data-counter data-target="45">0</div>
+            <div class="label">Events This Year</div>
+          </div>
+          <div class="hero-stat">
+            <div class="value" data-counter data-target="3200">0</div>
+            <div class="label">Active Students</div>
+          </div>
+          <div class="hero-stat">
+            <div class="value" data-counter data-target="12">0</div>
+            <div class="label">Clubs & Societies</div>
+          </div>
+          <div class="hero-stat">
+            <div class="value" data-counter data-target="96">0</div>
+            <div class="label">% Satisfaction</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-illustration">
+        <div class="hero-visual-card">
+          <div class="floating-badge badge-top">🔥 Trending Now</div>
+          <div class="floating-badge badge-bottom">✨ 127 Spots Left</div>
+          <div class="hero-event-preview" id="heroEventPreview">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== UPCOMING EVENTS CAROUSEL ========== -->
+  <section class="section" id="events">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="overline">Don't Miss Out</span>
+        <h2>Upcoming Events</h2>
+        <p>Explore the most exciting upcoming events on campus and secure your spot before they fill up.</p>
+      </div>
+      <div class="events-carousel reveal">
+        <div class="carousel-track" id="carouselTrack">
+          <!-- Filled by JS -->
+        </div>
+        <div class="carousel-controls">
+          <div class="carousel-dots" id="carouselDots"></div>
+          <div class="carousel-arrows">
+            <button class="carousel-arrow" id="carouselPrev">←</button>
+            <button class="carousel-arrow" id="carouselNext">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES ========== -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="overline">Why EventHub</span>
+        <h2>Everything You Need</h2>
+        <p>A complete event management solution designed for the modern college experience.</p>
+      </div>
+      <div class="features-grid" id="featuresGrid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STATS ========== -->
+  <section class="section">
+    <div class="stats-section reveal">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" data-counter data-target="45">0</div>
+          <div class="stat-label">Events Organized</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" data-counter data-target="3200">0</div>
+          <div class="stat-label">Students Registered</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" data-counter data-target="12">0</div>
+          <div class="stat-label">Active Clubs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" data-counter data-target="96">0</div>
+          <div class="stat-label">% Satisfaction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CATEGORIES ========== -->
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="overline">Browse By</span>
+        <h2>Event Categories</h2>
+        <p>Find events that match your interests and passions.</p>
+      </div>
+      <div class="categories-grid" id="categoriesGrid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TESTIMONIALS ========== -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="overline">What Students Say</span>
+        <h2>Loved by Students</h2>
+        <p>Hear from students who use EventHub to discover and manage their college events.</p>
+      </div>
+      <div class="testimonials-grid" id="testimonialsGrid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA SECTION ========== -->
+  <section class="section">
+    <div class="container">
+      <div class="stats-section reveal" style="text-align:center;">
+        <h2 style="color:white; margin-bottom: var(--space-4); position:relative; z-index:1;">Ready to Get Started?</h2>
+        <p style="color:rgba(255,255,255,0.8); max-width:500px; margin: 0 auto var(--space-8); position:relative; z-index:1;">Join thousands of students who are already using EventHub to discover amazing events on campus.</p>
+        <div style="display:flex; gap: var(--space-4); justify-content:center; flex-wrap:wrap; position:relative; z-index:1;">
+          <a href="pages/signup.html" class="btn btn-xl" style="background:white; color: var(--color-primary); font-weight: 700;">Create Free Account</a>
+          <a href="pages/events.html" class="btn btn-xl" style="background:rgba(255,255,255,0.15); color:white; border: 1px solid rgba(255,255,255,0.3);">Browse Events</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-brand">
+            <span class="brand-icon">🎪</span>
+            <span>EventHub</span>
+          </div>
+          <p>The ultimate college event management platform. Discover, register, and never miss an event again.</p>
+          <div class="footer-social">
+            <a href="#" data-tooltip="Twitter">𝕏</a>
+            <a href="#" data-tooltip="Instagram">📷</a>
+            <a href="#" data-tooltip="LinkedIn">in</a>
+            <a href="#" data-tooltip="GitHub">⌨</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Platform</h5>
+          <a href="pages/events.html">Events</a>
+          <a href="pages/calendar.html">Calendar</a>
+          <a href="pages/dashboard.html">Dashboard</a>
+          <a href="pages/profile.html">Profile</a>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <a href="#">Help Center</a>
+          <a href="#">Blog</a>
+          <a href="#">API Docs</a>
+          <a href="#">Community</a>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Contact Us</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 EventHub. Built with ❤️ for college communities.</span>
+        <span>Made by Abhijeet Sharma</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/landing.js"></script>
+</body>
+</html>

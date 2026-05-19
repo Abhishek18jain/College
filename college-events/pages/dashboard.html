@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your EventHub student dashboard — Track events, achievements, and more.">
+  <title>Dashboard — EventHub</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎪</text></svg>">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="../index.html" class="nav-brand">
+          <span class="brand-icon">🎪</span>
+          <span>EventHub</span>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">Menu</div>
+          <a href="dashboard.html" class="sidebar-link active">
+            <span class="icon">📊</span> Dashboard
+          </a>
+          <a href="events.html" class="sidebar-link">
+            <span class="icon">🎯</span> My Events
+            <span class="badge-count">4</span>
+          </a>
+          <a href="calendar.html" class="sidebar-link">
+            <span class="icon">📅</span> Calendar
+          </a>
+          <a href="#" class="sidebar-link" onclick="showNotifications()">
+            <span class="icon">🔔</span> Notifications
+            <span class="badge-count">2</span>
+          </a>
+          <a href="#" class="sidebar-link" id="certificatesLink">
+            <span class="icon">🏆</span> Certificates
+          </a>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">Account</div>
+          <a href="profile.html" class="sidebar-link">
+            <span class="icon">👤</span> Profile
+          </a>
+          <a href="#" class="sidebar-link" onclick="App.Toast.info('Settings coming soon!')">
+            <span class="icon">⚙️</span> Settings
+          </a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user" id="sidebarUser">
+          <div class="avatar">AS</div>
+          <div class="sidebar-user-info">
+            <h5>Abhijeet Sharma</h5>
+            <p>Student</p>
+          </div>
+        </div>
+        <button class="btn btn-ghost btn-sm" style="width:100%; margin-top: var(--space-2); color: var(--color-danger);" onclick="App.Auth.logout()">
+          🚪 Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN ========== -->
+    <main class="dashboard-main">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <button class="mobile-menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+          <div>
+            <h2>Dashboard</h2>
+            <p>Welcome back! Here's what's happening.</p>
+          </div>
+        </div>
+        <div class="top-bar-right">
+          <div class="search-bar">
+            <span>🔍</span>
+            <input type="text" placeholder="Search events, clubs...">
+          </div>
+          <button class="btn btn-icon btn-ghost notification-btn" onclick="showNotifications()">
+            🔔
+            <span class="badge-dot"></span>
+          </button>
+          <button class="btn btn-icon btn-ghost" onclick="App.Theme.toggle()">
+            <span class="theme-toggle-icon">🌙</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="dashboard-content">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner" id="welcomeBanner">
+          <h2>Good Morning, Abhijeet! 👋</h2>
+          <p>You have 3 upcoming events this week. Don't forget to check your new certificate!</p>
+          <a href="events.html" class="btn btn-lg" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3);">View My Events →</a>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="dashboard-stats" id="dashStats">
+          <div class="dash-stat-card glass-card">
+            <div class="dash-stat-icon" style="background: rgba(108,92,231,0.1); color: var(--color-primary);">📝</div>
+            <div class="dash-stat-info">
+              <h3 id="statRegistered">4</h3>
+              <p>Registered Events</p>
+              <span class="dash-stat-change change-up">↑ 2 this month</span>
+            </div>
+          </div>
+          <div class="dash-stat-card glass-card">
+            <div class="dash-stat-icon" style="background: rgba(0,206,201,0.1); color: var(--color-secondary);">📅</div>
+            <div class="dash-stat-info">
+              <h3>3</h3>
+              <p>Upcoming Events</p>
+              <span class="dash-stat-change change-up">↑ This week</span>
+            </div>
+          </div>
+          <div class="dash-stat-card glass-card">
+            <div class="dash-stat-icon" style="background: rgba(253,121,168,0.1); color: var(--color-accent);">🏆</div>
+            <div class="dash-stat-info">
+              <h3>3</h3>
+              <p>Certificates</p>
+              <span class="dash-stat-change change-up">↑ 1 new</span>
+            </div>
+          </div>
+          <div class="dash-stat-card glass-card">
+            <div class="dash-stat-icon" style="background: rgba(0,184,148,0.1); color: var(--color-success);">⭐</div>
+            <div class="dash-stat-info">
+              <h3>3</h3>
+              <p>Achievements</p>
+              <span class="dash-stat-change change-up">↑ Badge earned</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="dashboard-grid">
+          <!-- Left: Upcoming Events -->
+          <div class="widget-card glass-card">
+            <div class="widget-header">
+              <h3>Upcoming Events</h3>
+              <a href="events.html" class="btn btn-ghost btn-sm">View All →</a>
+            </div>
+            <div class="upcoming-list" id="upcomingList">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+          <!-- Right: Attendance + Achievements -->
+          <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+            <!-- Attendance -->
+            <div class="widget-card glass-card">
+              <div class="widget-header">
+                <h3>Attendance</h3>
+              </div>
+              <div class="attendance-ring">
+                <svg viewBox="0 0 120 120">
+                  <defs>
+                    <linearGradient id="attendanceGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#6C5CE7"/>
+                      <stop offset="100%" stop-color="#A29BFE"/>
+                    </linearGradient>
+                  </defs>
+                  <circle class="bg" cx="60" cy="60" r="54"/>
+                  <circle class="fill" id="attendanceFill" cx="60" cy="60" r="54"/>
+                </svg>
+                <div class="attendance-value">
+                  <span class="number">85%</span>
+                  <span class="label">Attended</span>
+                </div>
+              </div>
+              <p style="text-align:center; font-size: var(--fs-sm); color: var(--color-text-muted);">You've attended 17 of 20 events</p>
+            </div>
+
+            <!-- Achievements -->
+            <div class="widget-card glass-card">
+              <div class="widget-header">
+                <h3>Achievements</h3>
+              </div>
+              <div class="achievements-grid">
+                <div class="achievement-card">
+                  <div class="achievement-icon">🌅</div>
+                  <h5>Early Bird</h5>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon">🏆</div>
+                  <h5>Champion</h5>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon">⭐</div>
+                  <h5>Star</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Timeline -->
+        <div class="widget-card glass-card">
+          <div class="widget-header">
+            <h3>Recent Activity</h3>
+            <button class="btn btn-ghost btn-sm">View All</button>
+          </div>
+          <div class="timeline" id="activityTimeline">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Notifications Modal -->
+  <div class="modal-overlay" id="notificationsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Notifications</h3>
+        <button onclick="App.Modal.close('notificationsModal')" class="btn btn-icon btn-ghost btn-sm">✕</button>
+      </div>
+      <div class="modal-body notification-panel" id="notifPanel">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificates Modal -->
+  <div class="modal-overlay" id="certificatesModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>My Certificates</h3>
+        <button onclick="App.Modal.close('certificatesModal')" class="btn btn-icon btn-ghost btn-sm">✕</button>
+      </div>
+      <div class="modal-body" id="certPanel">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check auth
+      const user = App.Auth.getUser();
+      if (!user) {
+        // Auto-login for demo
+        App.Auth.login('abhijeet@college.edu', 'demo');
+      }
+      const currentUser = App.Auth.getUser();
+      if (currentUser) {
+        document.querySelector('#sidebarUser .avatar').textContent = currentUser.initials;
+        document.querySelector('#sidebarUser h5').textContent = currentUser.name;
+        const hour = new Date().getHours();
+        const greeting = hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening';
+        document.querySelector('#welcomeBanner h2').textContent = `${greeting}, ${currentUser.name.split(' ')[0]}! 👋`;
+      }
+
+      renderUpcoming();
+      renderTimeline();
+      renderNotifications();
+      renderCertificates();
+      animateAttendance();
+    });
+
+    function renderUpcoming() {
+      const container = document.getElementById('upcomingList');
+      const events = MockData.events.filter(e => e.status === 'upcoming').slice(0, 5);
+      container.innerHTML = events.map(e => {
+        const d = App.Utils.formatDateShort(e.date);
+        return `
+          <a href="event-details.html?id=${e.id}" class="upcoming-item">
+            <div class="upcoming-date" style="background: ${e.bannerGradient};">
+              <span class="day">${d.day}</span>
+              <span class="month">${d.month}</span>
+            </div>
+            <div class="upcoming-info">
+              <h4>${e.title}</h4>
+              <p>${e.venue} • ${e.time}</p>
+            </div>
+            <span class="badge ${e.isFree ? 'badge-success' : 'badge-primary'}">${e.isFree ? 'Free' : '₹' + e.price}</span>
+          </a>
+        `;
+      }).join('');
+    }
+
+    function renderTimeline() {
+      const container = document.getElementById('activityTimeline');
+      container.innerHTML = MockData.activityTimeline.map(a => `
+        <div class="timeline-item">
+          <div class="timeline-icon">${a.icon}</div>
+          <div class="timeline-content">
+            <h5>${a.text}</h5>
+            <p>${a.time}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderNotifications() {
+      const container = document.getElementById('notifPanel');
+      const icons = { event: '📅', achievement: '🏆', reminder: '⏰', certificate: '📜', update: '📢' };
+      const colors = { event: 'rgba(108,92,231,0.1)', achievement: 'rgba(253,203,110,0.15)', reminder: 'rgba(0,206,201,0.1)', certificate: 'rgba(0,184,148,0.1)', update: 'rgba(116,185,255,0.1)' };
+      container.innerHTML = MockData.notifications.map(n => `
+        <div class="notif-item ${n.read ? '' : 'unread'}">
+          <div class="notif-icon" style="background: ${colors[n.type]}">${icons[n.type]}</div>
+          <div class="notif-content">
+            <h5>${n.title}</h5>
+            <p>${n.message}</p>
+          </div>
+          <span class="notif-time">${n.time}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderCertificates() {
+      const container = document.getElementById('certPanel');
+      const colors = { participation: 'var(--color-primary)', achievement: 'var(--color-accent-light)', completion: 'var(--color-success)' };
+      container.innerHTML = MockData.certificates.map(c => `
+        <div style="display:flex; align-items:center; gap: var(--space-4); padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); margin-bottom: var(--space-3);">
+          <div style="width:48px;height:48px;border-radius:var(--radius-md);background:${colors[c.type]}15;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;">📜</div>
+          <div style="flex:1;">
+            <h5 style="font-size: var(--fs-sm); margin-bottom: 2px;">${c.title}</h5>
+            <p style="font-size: var(--fs-xs); color: var(--color-text-muted); margin:0;">ID: ${c.credentialId} • ${App.Utils.formatDate(c.date)}</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="App.Toast.success('Certificate downloaded!')">↓</button>
+        </div>
+      `).join('');
+    }
+
+    function showNotifications() {
+      App.Modal.open('notificationsModal');
+    }
+
+    document.getElementById('certificatesLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      App.Modal.open('certificatesModal');
+    });
+
+    function animateAttendance() {
+      setTimeout(() => {
+        const fill = document.getElementById('attendanceFill');
+        // 85% of circumference (339.292 * 0.15 = 50.9)
+        fill.style.strokeDashoffset = 339.292 * 0.15;
+      }, 500);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+/* ============================================
+   DESIGN SYSTEM — CSS Custom Properties
+   College Event Management System
+   ============================================ */
+
+:root {
+  /* ---- Color Palette (Light Theme) ---- */
+  --color-primary: #6C5CE7;
+  --color-primary-light: #A29BFE;
+  --color-primary-dark: #5A4BD1;
+  --color-secondary: #00CEC9;
+  --color-secondary-light: #81ECEC;
+  --color-accent: #FD79A8;
+  --color-accent-light: #FDCB6E;
+  --color-success: #00B894;
+  --color-warning: #FDCB6E;
+  --color-danger: #E17055;
+  --color-info: #74B9FF;
+
+  /* ---- Neutrals ---- */
+  --color-bg-primary: #F8F9FC;
+  --color-bg-secondary: #FFFFFF;
+  --color-bg-tertiary: #EEF0F6;
+  --color-bg-glass: rgba(255, 255, 255, 0.65);
+  --color-bg-glass-strong: rgba(255, 255, 255, 0.85);
+  --color-text-primary: #1A1A2E;
+  --color-text-secondary: #555770;
+  --color-text-muted: #8E8EA0;
+  --color-text-inverse: #FFFFFF;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-strong: rgba(0, 0, 0, 0.15);
+  --color-overlay: rgba(0, 0, 0, 0.5);
+
+  /* ---- Gradients ---- */
+  --gradient-primary: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%);
+  --gradient-secondary: linear-gradient(135deg, #00CEC9 0%, #81ECEC 100%);
+  --gradient-accent: linear-gradient(135deg, #FD79A8 0%, #FDCB6E 100%);
+  --gradient-hero: linear-gradient(135deg, #6C5CE7 0%, #00CEC9 50%, #FD79A8 100%);
+  --gradient-dark: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%);
+  --gradient-mesh: radial-gradient(at 40% 20%, rgba(108,92,231,0.15) 0px, transparent 50%),
+                   radial-gradient(at 80% 0%, rgba(0,206,201,0.1) 0px, transparent 50%),
+                   radial-gradient(at 0% 50%, rgba(253,121,168,0.1) 0px, transparent 50%);
+
+  /* ---- Typography ---- */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Outfit', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 2rem;
+  --fs-3xl: 2.5rem;
+  --fs-4xl: 3rem;
+  --fs-5xl: 3.75rem;
+  --fs-6xl: 4.5rem;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  --lh-tight: 1.2;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.75;
+  --ls-tight: -0.025em;
+  --ls-normal: 0;
+  --ls-wide: 0.05em;
+
+  /* ---- Spacing ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* ---- Borders & Radii ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* ---- Shadows ---- */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.12);
+  --shadow-2xl: 0 24px 64px rgba(0,0,0,0.16);
+  --shadow-glow: 0 0 40px rgba(108,92,231,0.25);
+  --shadow-glow-secondary: 0 0 40px rgba(0,206,201,0.2);
+  --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.06);
+
+  /* ---- Transitions ---- */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ---- Z-Index Scale ---- */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-overlay: 400;
+  --z-modal: 500;
+  --z-toast: 600;
+  --z-tooltip: 700;
+
+  /* ---- Layout ---- */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1200px;
+  --container-2xl: 1400px;
+  --sidebar-width: 280px;
+  --sidebar-collapsed: 72px;
+  --navbar-height: 72px;
+}
+
+/* ============================================
+   DARK THEME OVERRIDES
+   ============================================ */
+[data-theme="dark"] {
+  --color-bg-primary: #0F0F1A;
+  --color-bg-secondary: #1A1A2E;
+  --color-bg-tertiary: #222240;
+  --color-bg-glass: rgba(26, 26, 46, 0.7);
+  --color-bg-glass-strong: rgba(26, 26, 46, 0.9);
+  --color-text-primary: #E8E8F0;
+  --color-text-secondary: #A0A0B8;
+  --color-text-muted: #6E6E85;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
+  --color-overlay: rgba(0, 0, 0, 0.7);
+
+  --gradient-card: linear-gradient(145deg, rgba(26,26,46,0.9) 0%, rgba(26,26,46,0.6) 100%);
+  --gradient-mesh: radial-gradient(at 40% 20%, rgba(108,92,231,0.12) 0px, transparent 50%),
+                   radial-gradient(at 80% 0%, rgba(0,206,201,0.08) 0px, transparent 50%),
+                   radial-gradient(at 0% 50%, rgba(253,121,168,0.08) 0px, transparent 50%);
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.35);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.45);
+  --shadow-2xl: 0 24px 64px rgba(0,0,0,0.5);
+}
